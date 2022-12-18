@@ -1,11 +1,20 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Bullet
 {
-    [SerializeField] private float speed;
-
-    void Update()
+    public class Bullet : MonoBehaviour
     {
-        transform.Translate(0, 0, speed * Time.deltaTime);
+        [SerializeField] private float speed;
+
+        void Update()
+        {
+            transform.Translate(0, 0, speed * Time.deltaTime);
+        }
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.CompareTag("TowerFloor") || collision.gameObject.CompareTag("Obstacle"))
+                Destroy(gameObject);
+        }
     }
 }

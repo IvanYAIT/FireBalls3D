@@ -1,25 +1,24 @@
-using UnityEngine.UI;
-
-public class BulletView
+namespace Bullet
 {
-    private Image bulletImage;
-    private int bulletAmount;
-
-    public BulletView(Image bulletImage, int bulletAmount)
+    public class BulletView
     {
-        this.bulletImage = bulletImage;
-        this.bulletAmount = bulletAmount;
-        Cannon.OnShoot += View;
-        Cannon.OnReload += Realod;
-    }
+        private BulletModel model;
+        private BulletController controller;
 
-    public void View()
-    {
-        bulletImage.GetComponent<Image>().fillAmount -= (float)1/bulletAmount;
-    }
+        public BulletView(BulletModel model, BulletController controller)
+        {
+            this.model = model;
+            this.controller = controller;
+        }
 
-    public void Realod()
-    {
-        bulletImage.GetComponent<Image>().fillAmount = 1;
+        public void View()
+        {
+            controller.View(model.BulletImage, model.BulletAmount, model.CostPerShoot);
+        }
+
+        public void Realod()
+        {
+            controller.Realod(model.BulletImage, model.Cooldown);
+        }
     }
 }
